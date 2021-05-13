@@ -83,15 +83,20 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: my-artifact
+        name: artifact-pre
         path: build
         retention-days: 5
 
-    - name: Build target
+    - name: Build target nocode
       working-directory: build
       run: |
-        cmake --build . --config ${{ matrix.build_type }} --target package
+        cmake --build . --config ${{ matrix.build_type }} --target nocode/nocode
 
 
-
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: artifact-post
+        path: build
+        retention-days: 5
 

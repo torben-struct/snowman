@@ -19,6 +19,7 @@ jobs:
             name: "Linux GCC 9",
             os: ubuntu-latest,
             generator: Ninja,
+            toolset: gcc,
             cc: "gcc-9", cxx: "g++-9",
             cxxflags: "-Wall -Wextra -Werror"
           }
@@ -26,6 +27,7 @@ jobs:
             name: "Linux Clang 9",
             os: ubuntu-latest,
             generator: Ninja,
+            toolset: gcc,
             cc: "clang-9", cxx: "clang++-9",
             cxxflags: "-Wall -Wextra -Werror"
           }
@@ -33,6 +35,7 @@ jobs:
             name: "macOS Clang",
             os: macos-latest,
             generator: Ninja,
+            toolset: gcc,
             cc: "clang", cxx: "clang++",
             cxxflags: "-Wall -Wextra -Werror"
           }
@@ -40,6 +43,7 @@ jobs:
             name: "Windows MSVC 2019",
             os: windows-latest,
             generator: Visual Studio 16 2019,
+            toolset: msvc14.2,
             cc: "cl", cxx: "cl",
             cxxflags: "-W4 -WX -permissive- -Zc:preprocessor -wd5105"
           }
@@ -47,6 +51,7 @@ jobs:
             name: "Windows MSVC 2019 (permissive)",
             os: windows-latest,
             generator: Visual Studio 16 2019,
+            toolset: msvc14.2,
             cc: "cl", cxx: "cl",
             cxxflags: "-W4 -WX"
           }
@@ -55,7 +60,17 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - uses: seanmiddleditch/gha-setup-ninja@master
+    - name: Install boost
+      uses: MarkusJx/install-boost@v1.0.1
+      id: install-boost
+      with:
+      boost_version: 1.73.0
+      toolset: ${{ matrix.config.toolset }}
+
+    - name: Configure CMake
+      run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -B build
+      env:
+        BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
 
     - name: Configure
       env:

@@ -34,7 +34,6 @@ jobs:
             os: macos-latest,
             generator: MinGW Makefiles,
             generator-architecture: Win32,
-            architecture: 
             toolset: gcc
           }
         - {

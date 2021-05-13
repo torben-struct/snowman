@@ -19,30 +19,36 @@ jobs:
             name: "Linux GCC 9",
             os: ubuntu-latest,
             generator: MinGW Makefiles,
+            generator-architecture: Win32
             toolset: gcc
           }
         - {
             name: "Linux Clang 9",
             os: ubuntu-latest,
             generator: MinGW Makefiles,
+            generator-architecture: Win32
             toolset: gcc
           }
         - {
             name: "macOS Clang",
             os: macos-latest,
             generator: MinGW Makefiles,
+            generator-architecture: Win32
+            architecture: 
             toolset: gcc
           }
         - {
             name: "Windows MSVC 2019",
             os: windows-latest,
             generator: Visual Studio 16 2019,
+            generator-architecture: Win32
             toolset: msvc14.2
           }
         - {
             name: "Windows MSVC 2019 (permissive)",
             os: windows-latest,
             generator: Visual Studio 16 2019,
+            generator-architecture: Win32
             toolset: msvc14.2
           }
         build_type: [Release]
@@ -65,6 +71,7 @@ jobs:
         cd build
         cmake ../src \
             -G"${{ matrix.config.generator }}" \
+            -A"${{ matrix.config.generator-architecture }}" \
             -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
     
     - name: Build

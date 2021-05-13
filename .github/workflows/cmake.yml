@@ -64,8 +64,8 @@ jobs:
       uses: MarkusJx/install-boost@v1.0.1
       id: install-boost
       with:
-      boost_version: 1.73.0
-      toolset: ${{ matrix.config.toolset }}
+        boost_version: 1.73.0
+        toolset: ${{ matrix.config.toolset }}
 
     - name: Configure CMake
       run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -B build

@@ -37,7 +37,6 @@ jobs:
             toolset: gcc
           }
         - {
-            # https://cmake.org/cmake/help/latest/generator/Visual%20Studio%2016%202019.html
             name: "Windows MSVC 2019",
             os: windows-latest,
             generator: Visual Studio 16 2019,
@@ -56,7 +55,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     
-    - name: Install Qt # QT https://github.com/jurplel/install-qt-action
+    - name: Install Qt
        uses: jurplel/install-qt-action@v2
        with:
          version: '5.15.2'
@@ -64,7 +63,7 @@ jobs:
          target: 'desktop'
          arch: 'win64_msvc2019_64'
     
-    - name: Install boost # Boost
+    - name: Install boost
       uses: MarkusJx/install-boost@v1.0.1
       id: install-boost
       with:

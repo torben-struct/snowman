@@ -43,13 +43,6 @@ jobs:
             generator-architecture: x64,
             toolset: msvc14.2
           }
-        - {
-            name: "Windows MSVC 2019 (permissive)",
-            os: windows-latest,
-            generator: Visual Studio 16 2019,
-            generator-architecture: x64,
-            toolset: msvc14.2
-          }
         build_type: [Release]
 
     steps:
@@ -85,3 +78,16 @@ jobs:
       working-directory: build
       run: |
         cmake --build . --config ${{ matrix.build_type }}
+
+    - name: Build
+      working-directory: build
+      run: |
+        cmake --build . --config ${{ matrix.build_type }} --target package
+
+    - name: 'Upload Artifact'
+      working-directory: build
+      uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact
+        path: my_file.txt
+        retention-days: 5

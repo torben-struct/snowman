@@ -63,6 +63,7 @@ jobs:
         CXX: ${{ matrix.config.cxx }}
         CXXFLAGS: ${{ matrix.config.cxxflags }}
       run: |
+        cd src
         mkdir build
         cd build
         cmake -G"${{ matrix.config.generator }}" \

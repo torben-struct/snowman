@@ -79,14 +79,19 @@ jobs:
       run: |
         cmake --build . --config ${{ matrix.build_type }}
 
-    - name: Build
-      working-directory: build
-      run: |
-        cmake --build . --config ${{ matrix.build_type }} --target package
-
-    - name: 'Upload Artifact'
+    
+    - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: my-artifact
         path: build
         retention-days: 5
+
+    - name: Build target
+      working-directory: build
+      run: |
+        cmake --build . --config ${{ matrix.build_type }} --target package
+
+
+
+

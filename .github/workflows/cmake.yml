@@ -18,42 +18,32 @@ jobs:
         - {
             name: "Linux GCC 9",
             os: ubuntu-latest,
-            generator: Ninja,
-            toolset: gcc,
-            cc: "gcc-9", cxx: "g++-9",
-            cxxflags: "-Wall -Wextra -Werror"
+            generator: MinGW Makefiles,
+            toolset: gcc
           }
         - {
             name: "Linux Clang 9",
             os: ubuntu-latest,
-            generator: Ninja,
-            toolset: gcc,
-            cc: "clang-9", cxx: "clang++-9",
-            cxxflags: "-Wall -Wextra -Werror"
+            generator: MinGW Makefiles,
+            toolset: gcc
           }
         - {
             name: "macOS Clang",
             os: macos-latest,
-            generator: Ninja,
-            toolset: gcc,
-            cc: "clang", cxx: "clang++",
-            cxxflags: "-Wall -Wextra -Werror"
+            generator: MinGW Makefiles,
+            toolset: gcc
           }
         - {
             name: "Windows MSVC 2019",
             os: windows-latest,
             generator: Visual Studio 16 2019,
-            toolset: msvc14.2,
-            cc: "cl", cxx: "cl",
-            cxxflags: "-W4 -WX -permissive- -Zc:preprocessor -wd5105"
+            toolset: msvc14.2
           }
         - {
             name: "Windows MSVC 2019 (permissive)",
             os: windows-latest,
             generator: Visual Studio 16 2019,
-            toolset: msvc14.2,
-            cc: "cl", cxx: "cl",
-            cxxflags: "-W4 -WX"
+            toolset: msvc14.2
           }
         build_type: [Release]
 
@@ -70,21 +60,13 @@ jobs:
     - name: Configure
       env:
         BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
-        CC: ${{ matrix.config.cc }}
-        CXX: ${{ matrix.config.cxx }}
-        CXXFLAGS: ${{ matrix.config.cxxflags }}
       run: |
-        cd src
         mkdir build
         cd build
-        cmake -G"${{ matrix.config.generator }}" \
-            -DCMAKE_CXX_STANDARD=14 \
-            -DCMAKE_CXX_EXTENSIONS=OFF \
-            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
-            -DBUILD_BENCHMARKS=OFF \
-            -DBUILD_EXAMPLE=ON \
-            -DBUILD_TESTING=ON \
-            ..
+        cmake ../src \
+            -G"${{ matrix.config.generator }}" \
+            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+    
     - name: Build
       working-directory: build
       run: |

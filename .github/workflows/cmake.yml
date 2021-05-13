@@ -85,9 +85,8 @@ jobs:
         cmake --build . --config ${{ matrix.build_type }} --target package
 
     - name: 'Upload Artifact'
-      working-directory: build
       uses: actions/upload-artifact@v2
       with:
         name: my-artifact
-        path: my_file.txt
+        path: build
         retention-days: 5

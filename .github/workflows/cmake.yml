@@ -37,24 +37,36 @@ jobs:
             toolset: gcc
           }
         - {
+            # https://cmake.org/cmake/help/latest/generator/Visual%20Studio%2016%202019.html
             name: "Windows MSVC 2019",
             os: windows-latest,
             generator: Visual Studio 16 2019,
-            generator-architecture: Win32,
+            generator-architecture: x64,
             toolset: msvc14.2
           }
         - {
             name: "Windows MSVC 2019 (permissive)",
             os: windows-latest,
             generator: Visual Studio 16 2019,
-            generator-architecture: Win32,
+            generator-architecture: x64,
             toolset: msvc14.2
           }
         build_type: [Release]
 
     steps:
     - uses: actions/checkout@v1
-
+    
+    # QT https://github.com/jurplel/install-qt-action
+     - name: Install Qt
+       uses: jurplel/install-qt-action@v2
+       with:
+         version: '5.15.2'
+         host: 'windows'
+         target: 'desktop'
+         arch: 'win64_msvc2019_64'
+    
+    
+    # Boost
     - name: Install boost
       uses: MarkusJx/install-boost@v1.0.1
       id: install-boost

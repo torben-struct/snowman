@@ -87,10 +87,10 @@ jobs:
         path: build
         retention-days: 5
 
-    - name: Build target nocode
+    - name: Build target install
       working-directory: build
       run: |
-        cmake --build . --config ${{ matrix.build_type }} --target nocode/nocode
+        cmake --build . --config ${{ matrix.build_type }} --target install
 
 
     - name: Upload Artifact

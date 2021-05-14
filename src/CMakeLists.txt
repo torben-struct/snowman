@@ -140,6 +140,9 @@ if(${NC_QT5})
 
     set(NC_QT_CORE Qt5::Core)
     set(NC_QT_WIDGETS Qt5::Widgets)
+
+    # This is used to produce standalone bundles on Windows.
+    include(DeployQt5)
 else()
     # Find Qt4.
     find_package(Qt4 REQUIRED QtCore QtGui)

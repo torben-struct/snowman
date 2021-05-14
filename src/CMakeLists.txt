@@ -144,7 +144,7 @@ if(${NC_QT5})
     set(NC_QT_CORE Qt5::Core)
     set(NC_QT_WIDGETS Qt5::Widgets)
 
-    windeployqt(Decompiler)
+
 else()
     # Find Qt4.
     find_package(Qt4 REQUIRED QtCore QtGui)
